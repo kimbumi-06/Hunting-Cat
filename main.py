@@ -1,7 +1,7 @@
 import pygame
 import sys
 from cat import Cat # Player 클래스 가져옴
-
+from bullets import Bullet  # Bullet 클래스 가져옴
 
 #초기화
 pygame.init()
@@ -28,7 +28,8 @@ while True:
     keys = pygame.key.get_pressed() # 키 입력 받기
     player.handle_input(keys, dt)
 
-
+    player.shoot() # 총알 쏘기
+    player.update_bullets(dt)
 
     # 화면 그리기
     screen.fill((255, 255, 255))  # 배경색 검정
