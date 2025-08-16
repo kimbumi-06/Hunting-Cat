@@ -9,7 +9,7 @@ class Bullet:
         self.direction = direction # 고양이로부터 받은 방향 저장
         
         self.width = 5
-        self.height = 10
+        self.height = 5
         self.rect = pygame.Rect(self.x - self.width // 2, self.y - self.height // 2, self.width, self.height)
 
     def update(self, dt):
@@ -19,8 +19,7 @@ class Bullet:
         self.rect.center = (int(self.x), int(self.y))
         
     def draw(self, screen):
-        # 총알을 노란색 사각형으로 그립니다.
-        pygame.draw.rect(screen, (255, 255, 0), self.rect)
+        pygame.draw.rect(screen, (0, 0, 255), self.rect)
 
 
 class BulletManager:
