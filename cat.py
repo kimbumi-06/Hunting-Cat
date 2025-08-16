@@ -16,7 +16,12 @@ class Cat:
             self.image_right = self.image_front
         
         self.current_image = self.image_front
-        self.rect = self.current_image.get_rect(center=(x, y))
+        original_rect = self.current_image.get_rect(center=(x, y)) # 고양이 대신 사각형
+        new_width = int(size[0] * 0.8)  # 원래 너비의 80%
+        new_height = int(size[1] * 0.8)  
+        # 새로운 사각형을 만들고, 중심을 원래 위치로 설정합니다.
+        self.rect = pygame.Rect(0, 0, new_width, new_height)
+        self.rect.center = original_rect.center
         self.speed = 200 # 픽셀/초 단위
     
     def handle_input(self, keys, dt):
@@ -41,5 +46,4 @@ class Cat:
 
     def draw(self, screen):
         screen.blit(self.current_image, self.rect)
-
-
+    
