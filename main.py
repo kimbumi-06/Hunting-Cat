@@ -1,7 +1,7 @@
 import pygame
 import sys
 from cat import Cat # Player 클래스 가져옴
-from bullets import Bullet  # Bullet 클래스 가져옴
+from bullets import BulletManager
 
 #초기화
 pygame.init()
@@ -10,8 +10,8 @@ clock = pygame.time.Clock()
 
 # 플레이어
 player_size = (150, 150)
-print(player_size)
 player = Cat(400, 300, 200, player_size)  # Cat 클래스 인스턴스 생성
+bullet_manager = BulletManager()
 
 
 # 게임 루프(게임 가동)
@@ -28,12 +28,13 @@ while True:
     keys = pygame.key.get_pressed() # 키 입력 받기
     player.handle_input(keys, dt)
 
-    player.shoot() # 총알 쏘기
-    player.update_bullets(dt)
+    bullet_manager.create_bullet(player.rect, player.direction)
+    bullet_manager.update(dt)
 
     # 화면 그리기
     screen.fill((255, 255, 255))  # 배경색 검정
     player.draw(screen)  # Cat 클래스의 draw 메서드 호출
+    bullet_manager.draw(screen)  # 총알 그리기
     pygame.display.flip() # 화면 등장 명령어
     clock.tick(60) #1초당 프레임 갱식 수치
 
