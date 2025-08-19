@@ -2,17 +2,23 @@ import pygame
 import sys
 from cat import Cat # Player 클래스 가져옴
 from bullets import BulletManager
+from mouse import MouseManager
 
 #초기화
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+map_size = (800, 600)  # 맵 크기 설정
+screen = pygame.display.set_mode(map_size)
 clock = pygame.time.Clock()
 
 # 플레이어
 player_size = (150, 150)
 player = Cat(400, 300, 200, player_size)  # Cat 클래스 인스턴스 생성
+
+#총알
 bullet_manager = BulletManager()
 
+#적
+mouse = MouseManager(map_size[0], map_size[1])  # MouseManager 인스턴스 생성
 
 # 게임 루프(게임 가동)
 while True:
@@ -28,13 +34,21 @@ while True:
     keys = pygame.key.get_pressed() # 키 입력 받기
     player.handle_input(keys, dt)
 
+    # 총알 발사
     bullet_manager.create_bullet(player.rect, player.direction)
     bullet_manager.update(dt)
+
+    mouse.create_mouse()  # 새로운 쥐 생성
+    mouse.update(player.rect, dt)  # 쥐 위치 업데이트
 
     # 화면 그리기
     screen.fill((255, 255, 255))  # 배경색 검정
     player.draw(screen)  # Cat 클래스의 draw 메서드 호출
     bullet_manager.draw(screen)  # 총알 그리기
+    mouse.draw(screen)  # 쥐 그리기
     pygame.display.flip() # 화면 등장 명령어
     clock.tick(60) #1초당 프레임 갱식 수치
+
+
+
 
