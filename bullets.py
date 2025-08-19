@@ -29,7 +29,7 @@ class BulletManager:
 
     def create_bullet(self, player_rect, direction):
         current_time = pygame.time.get_ticks()  # 현재 시간 (밀리초 단위)
-        if current_time - self.last_shot_time > 500:  # 0.2초 간격으로 총알 발사
+        if current_time - self.last_shot_time > 300:  # 0.2초 간격으로 총알 발사
             new_bullet = Bullet(player_rect.centerx, player_rect.centery, direction)
             self.all_bullets.append(new_bullet)
             self.last_shot_time = current_time  # 마지막 발사 시간 업데이트

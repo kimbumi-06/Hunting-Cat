@@ -10,13 +10,15 @@ class Mouse:
         start_x = random.choice([0, screen_width])
         start_y = random.randint(0, screen_height)
 
-        size = (50, 50)
-        if start_x == 0:
-            image = pygame.image.load("assets/쥐 왼쪽에서.png")
-            self.image = pygame.transform.scale(image, size)
+        size = (50, 50)  # 쥐 이미지 크기 설정
+        self.image_right = pygame.transform.scale(pygame.image.load("assets/쥐 오른쪽에서.png"), size)
+        self.image_left = pygame.transform.scale(pygame.image.load("assets/쥐 왼쪽에서.png"), size)
+
+        
+        if start_x < screen_width / 2:
+            self.image = self.image_left
         else:
-            image = pygame.image.load("assets/쥐 오른쪽에서.png")
-            self.image = pygame.transform.flip(pygame.transform.scale(image, size), True, False)
+            self.image = self.image_right
 
         self.rect = self.image.get_rect(center=(start_x, start_y))
 
@@ -30,10 +32,17 @@ class Mouse:
         if distance > 0:
             dx /= distance
             dy /= distance
+            
+        if dx < 0:
+            self.image = self.image_right
+        elif dx > 0:
+            self.image = self.image_left
 
         self.rect.x += dx * 100 * dt
         self.rect.y += dy * 100 * dt
+
         
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
@@ -43,15 +52,19 @@ class MouseManager:
         self.mice = []
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.last_spawn_time = pygame.time.get_ticks()
     
     def create_mouse(self):
-        new_mouse = Mouse(self.screen_width, self.screen_height)
-        self.mice.append(new_mouse)
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_spawn_time > 1000:
+            new_mouse = Mouse(self.screen_width, self.screen_height)
+            self.mice.append(new_mouse)
+            self.last_spawn_time = current_time
     
     def update(self, player_rect, dt):
         for enemy in self.mice[:]:
             enemy.move(player_rect, dt)
     
-    def draw(self, screen):
-        for enemy in self.mice:
-            enemy.draw(screen)
+    def draw(self, screen): #이미지 파일이 Mouse 클래스에 있으니
+        for enemy in self.mice: 
+            enemy.draw(screen) # Mouse에 draw 추가 -> MouseManager에 불러오기
