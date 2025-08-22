@@ -51,12 +51,27 @@ class Cat:
         self.rect.x += dx
         self.rect.y += dy
 
-    
-
     def draw(self, screen):
         screen.blit(self.current_image, self.rect) #고양이 이미지를 네모 위치에 도장찍기
 
 
+class Hpbar: #체력바
+    def __init__(self):
+        self.max_hp = 100
+        self.hp = self.max_hp
+        self.image = pygame.transform.scale(pygame.image.load("assets/hp.png"), (35, 35))
+
+    def draw(self, screen):
+        bar_width = 100
+        bar_height = 10
+        x = 50
+        y = 50
+        pygame.draw.rect(screen, (0, 0, 0), (x, y, bar_width, bar_height))
+        
+        self.hp_ratio = self.hp / self.max_hp
+        self.hp_width = int(100 * self.hp_ratio)
+        pygame.draw.rect(screen, (255, 0, 0), (x, y, self.hp_width, bar_height))
+        screen.blit(self.image, (x - 25 , y - 15))  # 체력바 옆에 이미지 그리기
 
 
 

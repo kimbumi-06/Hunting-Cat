@@ -1,6 +1,6 @@
 import pygame
 import sys
-from cat import Cat # Player 클래스 가져옴
+from cat import Cat, Hpbar # Player 클래스 가져옴
 from bullets import BulletManager
 from mouse import MouseManager
 
@@ -13,6 +13,9 @@ clock = pygame.time.Clock()
 # 플레이어
 player_size = (150, 150)
 player = Cat(400, 300, 200, player_size)  # Cat 클래스 인스턴스 생성
+
+#체력
+hp = Hpbar()
 
 #총알
 bullet_manager = BulletManager()
@@ -49,9 +52,10 @@ while True:
                 mouse.remove(m)  # 쥐 제거
                 break
 
-    # 화면 그리기
+    # 화면 그리기 **배경을 나중에 그리면 다 덮여버림
     screen.fill((255, 255, 255))  # 배경색 검정
     player.draw(screen)  # Cat 클래스의 draw 메서드 호출
+    hp.draw(screen)  # 체력바 그리기
     bullet_manager.draw(screen)  # 총알 그리기
     mouse.draw(screen)  # 쥐 그리기
     pygame.display.flip() # 화면 등장 명령어
