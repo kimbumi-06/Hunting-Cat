@@ -67,4 +67,7 @@ class MouseManager:
     
     def draw(self, screen): #이미지 파일이 Mouse 클래스에 있으니
         for enemy in self.mice: 
-            enemy.draw(screen) # Mouse에 draw 추가 -> MouseManager에 불러오기
+            enemy.draw(screen) # Mouse에 draw 추가 -> MouseManager에 불러오기4
+
+    def remove(self, mouse):
+        self.mice.remove(mouse)  # 쥐 제거

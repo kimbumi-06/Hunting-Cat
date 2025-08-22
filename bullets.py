@@ -46,3 +46,6 @@ class BulletManager:
         """모든 총알을 화면에 그립니다."""
         for bullet in self.all_bullets:
             bullet.draw(screen)
+
+    def remove(self, bullet):
+        self.all_bullets.remove(bullet)

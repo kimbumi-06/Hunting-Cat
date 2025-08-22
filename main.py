@@ -41,6 +41,14 @@ while True:
     mouse.create_mouse()  # 새로운 쥐 생성
     mouse.update(player.rect, dt)  # 쥐 위치 업데이트
 
+    # 쥐와 총알 충돌 처리
+    for bullet in bullet_manager.all_bullets:
+        for m in mouse.mice:
+            if bullet.rect.colliderect(m.rect):
+                bullet_manager.remove(bullet)  # 총알 제거
+                mouse.remove(m)  # 쥐 제거
+                break
+
     # 화면 그리기
     screen.fill((255, 255, 255))  # 배경색 검정
     player.draw(screen)  # Cat 클래스의 draw 메서드 호출
